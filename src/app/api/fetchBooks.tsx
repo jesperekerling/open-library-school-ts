@@ -16,8 +16,8 @@ const SearchBookForm = ({ onSearch }: { onSearch: (query: string) => void }) => 
   };
 
   return (
-    <form onSubmit={handleSubmit} className='w-full'>
-      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3 dark:text-black' autoFocus />
+    <form onSubmit={handleSubmit} className='text-center'>
+      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3 dark:text-black font-semibold' autoFocus />
       <button type="submit" className='px-5 py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 hover:text-white dark:hover:text-black font-semibold'>Search</button>
     </form>
   );
@@ -75,7 +75,7 @@ const FetchBooks = ({ books }: Props) => {
                   src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
                   alt={book.title} 
                   width={100} 
-                  height={150} 
+                  height={166} 
                   onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
                 />
               </div>

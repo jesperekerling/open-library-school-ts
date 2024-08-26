@@ -5,7 +5,7 @@ import { BookProvider } from "@/context/books";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 container">
+    <main className="flex md:min-h-[500px] flex-col items-center justify-between ontainer">
       <FetchBooks books={[]} />
     </main>
   );
