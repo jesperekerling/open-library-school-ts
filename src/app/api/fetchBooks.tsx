@@ -66,38 +66,49 @@ const FetchBooks = ({ books }: Props) => {
       {loading ? (
         <div className="loading-icon">Loading...</div>
       ) : (
-        <ul className='bg-white dark:bg-black'>
+        <div className='bg-white dark:bg-black grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-5 sm:gap-3'>
           {sortedResults.map((book, index) => (
-            <li key={index} className='p-4 flex'>
-                
-              <div className='mr-5'>
+            <div key={index} className='p-4 flex hover:opacity-75'>
+              <div className='mr-5 place-content-center'>
                 <Image 
                   src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
                   alt={book.title} 
-                  width={100} 
-                  height={166} 
-                  onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
+                  width={200} 
+                  height={333} 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null; // Prevents infinite loop
+                    e.currentTarget.src = '/placeholder-author.png';
+                  }} 
                 />
               </div>
-              <div className='flex-1'>
-              <h2 className='font-semibold text-xl pb-3'>{book.title}</h2>
-              <p className='flex'>{book.author_key && book.author_key.length > 0 && (
-                <Image 
-                  src={`https://covers.openlibrary.org/a/olid/${book.author_key[0]}-M.jpg`} 
-                  alt={book.title}
-                  style={{
-                    objectFit: 'contain',
-                  }}
-                  width={30}
-                  height={50}
-                  onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
-                />
-              )} Author: {book.author_name && book.author_name.join(', ')}</p>
-              <p>Published: {book.first_publish_year}</p>
+              <div className='flex-1 place-content-center'>
+                <h2 className='font-semibold text-xl pb-3'>{book.title}</h2>
+                <p className='flex'>
+                  {book.author_key && book.author_key.length > 0 && (
+                    <Image 
+                      src={`https://covers.openlibrary.org/a/olid/${book.author_key[0]}-M.jpg`} 
+                      alt={book.title}
+                      style={{
+                        objectFit: 'contain',
+                        width: 'auto',
+                        height: 'auto',
+                      }}
+                      width={30}
+                      height={50}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null; // Prevents infinite loop
+                        e.currentTarget.src = '/placeholder-author.png';
+                      }} 
+                    />
+                  )} 
+                  Author<br />
+                  {book.author_name && book.author_name.join(', ')}
+                </p>
+                <p>Published: {book.first_publish_year}</p>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
