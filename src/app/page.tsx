@@ -1,6 +1,6 @@
 import Image from "next/image";
 import FetchBooks from './api/fetchBooks';
-import { BookProvider } from "@/context/books";
+
 
 
 export default function Home() {
