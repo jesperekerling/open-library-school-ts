@@ -17,8 +17,8 @@ const SearchBookForm = ({ onSearch }: { onSearch: (query: string) => void }) => 
 
   return (
     <form onSubmit={handleSubmit} className='w-full'>
-      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3' autoFocus />
-      <button type="submit" className='px-5 py-3 bg-black text-white hover:bg-gray-800 hover:text-white font-semibold'>Search</button>
+      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3 dark:text-black' autoFocus />
+      <button type="submit" className='px-5 py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 hover:text-white dark:hover:text-black font-semibold'>Search</button>
     </form>
   );
 };
@@ -66,21 +66,21 @@ const FetchBooks = ({ books }: Props) => {
       {loading ? (
         <div className="loading-icon">Loading...</div>
       ) : (
-        <ul className='bg-white'>
+        <ul className='bg-white dark:bg-black'>
           {sortedResults.map((book, index) => (
             <li key={index} className='p-4 flex'>
                 
-                        <div className='mr-5'>
-                            <Image 
-                            src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
-                            alt={book.title} 
-                            width={100} 
-                            height={150} 
-                            onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
-                            />
-                        </div>
-                        <div className='flex-1'>
-              <h2 className='font-semibold text-xl'>{book.title}</h2>
+              <div className='mr-5'>
+                <Image 
+                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
+                  alt={book.title} 
+                  width={100} 
+                  height={150} 
+                  onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
+                />
+              </div>
+              <div className='flex-1'>
+              <h2 className='font-semibold text-xl pb-3'>{book.title}</h2>
               <p className='flex'>{book.author_key && book.author_key.length > 0 && (
                 <Image 
                   src={`https://covers.openlibrary.org/a/olid/${book.author_key[0]}-M.jpg`} 
