@@ -17,8 +17,8 @@ const SearchBookForm = ({ onSearch }: { onSearch: (query: string) => void }) => 
 
   return (
     <form onSubmit={handleSubmit} className='w-full'>
-      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" />
-      <button type="submit">Search</button>
+      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3' autoFocus />
+      <button type="submit" className='px-5 py-3 bg-black text-white hover:bg-gray-800 hover:text-white font-semibold'>Search</button>
     </form>
   );
 };
@@ -59,8 +59,8 @@ const FetchBooks = ({ books }: Props) => {
     <div>
       <SearchBookForm onSearch={handleSearch} />
       <div>
-        Sort:
-        <button onClick={() => handleSortChange('year')}>Sort by Year</button>
+        Sort: 
+        <button className='p-3' onClick={() => handleSortChange('year')}>Sort by Year</button>
         <button onClick={() => handleSortChange('title')}>Sort by Title</button>
       </div>
       {loading ? (
@@ -68,9 +68,9 @@ const FetchBooks = ({ books }: Props) => {
       ) : (
         <ul className='bg-white'>
           {sortedResults.map((book, index) => (
-            <li key={index} className='p-4'>
+            <li key={index} className='p-4 flex'>
                 
-                        <div className='flex mr-5'>
+                        <div className='mr-5'>
                             <Image 
                             src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
                             alt={book.title} 
@@ -79,17 +79,22 @@ const FetchBooks = ({ books }: Props) => {
                             onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
                             />
                         </div>
-              <h3 className='font-semibold text-lg'>{book.title}</h3>
+                        <div className='flex-1'>
+              <h2 className='font-semibold text-xl'>{book.title}</h2>
               <p className='flex'>{book.author_key && book.author_key.length > 0 && (
                 <Image 
                   src={`https://covers.openlibrary.org/a/olid/${book.author_key[0]}-M.jpg`} 
-                  alt={book.title} 
-                  width={25} 
-                  height={40} 
+                  alt={book.title}
+                  style={{
+                    objectFit: 'contain',
+                  }}
+                  width={30}
+                  height={50}
                   onError={(e) => (e.currentTarget.src = '/path/to/placeholder.jpg')} // Optional: handle missing images
                 />
               )} Author: {book.author_name && book.author_name.join(', ')}</p>
-              <p>First Published: {book.first_publish_year}</p>
+              <p>Published: {book.first_publish_year}</p>
+              </div>
             </li>
           ))}
         </ul>
