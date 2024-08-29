@@ -17,7 +17,7 @@ const SearchBookForm = ({ onSearch }: { onSearch: (query: string) => void }) => 
 
   return (
     <form onSubmit={handleSubmit} className='text-center'>
-      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='p-3 dark:text-black font-semibold' autoFocus />
+      <input type="text" value={query} onChange={handleInputChange} placeholder="Search for books" className='px-5 py-4 dark:text-black font-semibold' autoFocus />
       <button type="submit" className='px-5 py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 hover:text-white dark:hover:text-black font-semibold'>Search</button>
     </form>
   );
@@ -62,41 +62,38 @@ const FetchBooks = ({ books }: Props) => {
 
   return (
     <div>
-      <h1>Search Books</h1>
       <SearchBookForm onSearch={handleSearch} />
-      <div>
-        Sort: 
-        <button className='p-3' onClick={() => handleSortChange('newest')}>Sort by Newest</button>
-        <button onClick={() => handleSortChange('oldest')}>Sort by Oldest</button>
-      </div>
-      <div>Total Results: {searchResults.length}</div>
       {loading ? (
         <div className="loading-icon">Loading...</div>
       ) : (
-        <div className='bg-white dark:bg-black grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:gap-5 sm:gap-3'>
+        <div>
+        <div>Total Results: {searchResults.length}</div>
+          <div>
+            Sort: 
+            <button className='p-3' onClick={() => handleSortChange('newest')}>Sort by Newest</button>
+            <button onClick={() => handleSortChange('oldest')}>Sort by Oldest</button>
+          </div>
+            <div className='bg-white dark:bg-black grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:gap-5 sm:gap-3'>
           {sortedResults.map((book, index) => (
             <div key={index} className='p-4 flex hover:opacity-75'>
               <div className='mr-5 place-content-center'>
-                <Image 
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
-                  alt={book.title} 
-                  width={200} 
-                  height={333} 
-                  onError={(e) => {
-                    e.currentTarget.onerror = null; // Prevents infinite loop
-                    e.currentTarget.src = '/placeholder-author.png';
-                  }} 
-                />
-              </div>
-              <div className='flex-1 place-content-center'>
-                <h2 className='font-semibold text-xl pb-3'>
-                  <Link href={`${book.key}`}>
-                    {book.title}
-                  </Link>
-                </h2>
-                <p className='flex'>
-                  {book.author_key && book.author_key.length > 0 && (
-                    <Image 
+                <Link href={`${book.key}`}>
+                  <Image 
+                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`} 
+                    alt={book.title} 
+                    width={250} 
+                    height={333} 
+                    onError={(e) => {
+                      e.currentTarget.onerror = null; // Prevents infinite loop
+                      e.currentTarget.src = '/placeholder-author.png';
+                    }} 
+                  />
+                  <h2 className='font-semibold text-lg py-3'>
+                      {book.title}
+                  </h2>
+                  <p className='flex'>
+                    {book.author_key && book.author_key.length > 0 && (
+                      <Image 
                       src={`https://covers.openlibrary.org/a/olid/${book.author_key[0]}-M.jpg`} 
                       alt={book.title}
                       style={{
@@ -110,16 +107,17 @@ const FetchBooks = ({ books }: Props) => {
                         e.currentTarget.onerror = null; // Prevents infinite loop
                         e.currentTarget.src = '/placeholder-author.png';
                       }} 
-                    />
-                  )} 
-                  Author<br />
-                  {book.author_name && book.author_name.join(', ')}
-                </p>
-                <p>Published: {book.first_publish_year}</p>
+                      />
+                    )}
+                    {book.author_name && book.author_name.join(', ')}
+                  </p>
+                  <p>Published: {book.first_publish_year}</p>
+                </Link>
               </div>
             </div>
           ))}
         </div>
+      </div>
       )}
     </div>
   );
