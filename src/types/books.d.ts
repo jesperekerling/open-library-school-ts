@@ -7,9 +7,10 @@ interface Book {
     cover_i?: number;
     cover_edition_key?: string[];
     first_publish_year: number;
-    cover_i: number;
+    key: string;
   }
   
   interface Props {
     books: Book[];
   }
+  
