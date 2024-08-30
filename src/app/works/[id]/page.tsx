@@ -45,16 +45,9 @@ const BookPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   
 
-
   useEffect(() => {
     if (id) {
-      fetch(`https://openlibrary.org/books/${id}.json`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        mode: 'no-cors', // Ensure CORS mode is set
-      })
+      fetch(`https://openlibrary.org/books/${id}.json`)
         .then((res) => {
           if (!res.ok) {
             throw new Error('Failed to fetch book data');
@@ -64,13 +57,7 @@ const BookPage: React.FC = () => {
         .then((data) => {
           setBook(data);
           const workId = data.works[0].key.split('/').pop();
-          return fetch(`https://openlibrary.org/works/${workId}.json`, {
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            mode: 'no-cors', // Ensure CORS mode is set
-          });
+          return fetch(`https://openlibrary.org/works/${workId}.json`);
         })
         .then((res) => {
           if (!res.ok) {
@@ -101,7 +88,7 @@ const BookPage: React.FC = () => {
 
   return (
     <div className='container mx-auto max-w-[800px]'>
-      <div className='flex gap-40 my-4'>
+      <div className='flex gap-20 my-4'>
         <div className='pr-6'>
           {book.covers.length > 0 && (
             <Image
