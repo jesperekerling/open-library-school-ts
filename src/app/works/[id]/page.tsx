@@ -45,9 +45,16 @@ const BookPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   
 
+
   useEffect(() => {
     if (id) {
-      fetch(`https://openlibrary.org/books/${id}.json`)
+      fetch(`https://openlibrary.org/books/${id}.json`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        mode: 'no-cors', // Ensure CORS mode is set
+      })
         .then((res) => {
           if (!res.ok) {
             throw new Error('Failed to fetch book data');
@@ -57,7 +64,13 @@ const BookPage: React.FC = () => {
         .then((data) => {
           setBook(data);
           const workId = data.works[0].key.split('/').pop();
-          return fetch(`https://openlibrary.org/works/${workId}.json`);
+          return fetch(`https://openlibrary.org/works/${workId}.json`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            mode: 'no-cors', // Ensure CORS mode is set
+          });
         })
         .then((res) => {
           if (!res.ok) {
